@@ -1,59 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import '../css/Event.css'
 
-const Event = (props) => {
+const getRemaining = (eventTime) => {
+    const diff = new Date(eventTime) - new Date()
+    const abs = Math.abs(diff) 
+    const days = Math.floor(abs / 86400000) 
+    const hours = Math.floor(abs / 3600000) % 24
+    const minutes = Math.floor(abs / 60000) % 60
+    const seconds = Math.floor(abs / 1000) % 60
+    return { past: diff < 0, text: `${days}d ${hours}h ${minutes}m ${seconds}s` }
+}
 
-    const [event, setEvent] = useState([])
-    const [time, setTime] = useState([])
-    const [remaining, setRemaining] = useState([])
+const Event = ({ title, description, eventTime, image }) => {
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const eventData = await EventsAPI.getEventsById(props.id)
-                setEvent(eventData)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [])
+    const [remaining, setRemaining] = useState(getRemaining(eventTime))
 
     useEffect(() => {
-        (async () => {
-            try {
-                const result = await dates.formatTime(event.time)
-                setTime(result)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [event])
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const timeRemaining = await dates.formatRemainingTime(event.remaining)
-                setRemaining(timeRemaining)
-                dates.formatNegativeTimeRemaining(remaining, event.id)
-            }
-            catch (error) {
-                throw error
-            }
-        }) ()
-    }, [event])
+        const timer = setInterval(() => setRemaining(getRemaining(eventTime)), 1000)
+        return () => clearInterval(timer)
+    }, [eventTime])
 
     return (
-        <article className='event-information'>
-            <img src={event.image} />
+        <article className={`event-information ${remaining.past ? 'event-past' : ''}`}>
+            {image && <img src={image} alt={title} />}
 
-            <div className='event-information-overlay'>
-                <div className='text'>
-                    <h3>{event.title}</h3>
-                    <p><i className="fa-regular fa-calendar fa-bounce"></i> {event.date} <br /> {time}</p>
-                    <p id={`remaining-${event.id}`}>{remaining}</p>
-                </div>
+            <div className='event-text'>
+                <h3>{title}</h3>
+                <p className='event-date'>📅 {new Date(eventTime).toLocaleString()}</p>
+                <p>{description}</p>
+                <p className='event-countdown'>
+                    {remaining.past ? `Event passed ${remaining.text} ago` : `Starts in ${remaining.text}`}
+                </p>
             </div>
         </article>
     )

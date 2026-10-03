@@ -8,36 +8,29 @@ import './App.css'
 const App = () => {
   let element = useRoutes([
     {
-      path: '/',
+      path: '/', 
       element: <Locations />
     },
     {
-      path: '/echolounge',
-      element: <LocationEvents index={1} />
-    },
-    {
-      path: '/houseofblues',
-      element: <LocationEvents index={2} />
-    },
-    {
-      path: '/pavilion',
-      element: <LocationEvents index={3} />
-    },
-    {
-      path: '/americanairlines',
-      element: <LocationEvents index={4} />
+      path: '/locations/:id',
+      element: <LocationEvents />
     },
     {
       path: '/events',
       element: <Events />
     }
+    
   ])
 
   return (
     <div className='app'>
+      <span className='ghost' style={{ top: '15%', left: '5%' }}>👻</span>
+      <span className='ghost' style={{ top: '60%', left: '85%', animationDelay: '-4s' }}>👻</span>
+      <span className='ghost' style={{ top: '75%', left: '15%', animationDelay: '-8s' }}>👻</span>
+      <span className='ghost' style={{ top: '30%', left: '70%', animationDelay: '-2s' }}>👻</span>
 
       <header className='main-header'>
-        <h1>UnityGrid Plaza</h1>
+        <h1>Spooky Space</h1>
 
         <div className='header-buttons'>
           <Link to='/' role='button'>Home</Link>

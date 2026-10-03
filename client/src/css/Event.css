@@ -1,57 +1,37 @@
 .event-information {
-    position: relative;
-    width: 350px;
-    height: 350px;
-    padding: 0px;
-    margin: 20px;
-    border: 2px solid white;
-    border-radius: 0px;
+    width: 320px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #a064ff;
+    box-shadow: 0 0 15px rgba(160, 100, 255, 0.5);
 }
 
 .event-information img {
     width: 100%;
-    height: 100%;
+    height: 180px;
     object-fit: cover;
+    display: block;
 }
 
-.event-information-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 100%;
-    right: 0;
-    background-color: var(--primary);
-    overflow: hidden;
-    width: 0;
-    height: 100%;
-    transition: 0.5s ease;
+.event-text {
+    padding: 16px;
 }
 
-.event-information:hover .event-information-overlay {
-    width: 100%;
-    left: 0;
-}
-
-.text {
-    position: absolute;
-    overflow: hidden;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.text i {
-    margin-right: 10px;
-}
-
-.text p {
-    color: white;
-    margin-top: 10px;
-}
-
-.negative-time-remaining {
-    background-color: red;
-    color: white;
+.event-countdown {
     font-weight: 700;
-    padding: 10px;
-    text-align: center;
+    color: #ffb347;
+}
+
+.event-past {
+    opacity: 0.55;
+    filter: grayscale(0.8);
+}
+
+.event-past h3 {
+    text-decoration: line-through;
+}
+
+.event-past .event-countdown {
+    color: #ff6b6b;
 }
